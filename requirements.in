@@ -1,0 +1,17 @@
+# library dependencies
+aws-cdk-lib
+constructs
+pip-tools
+pydantic
+cryptography
+python-dotenv
+
+# code quality
+black
+flake8
+autopep8
+
+# library management
+twine
+generate-changelog
+bump-my-version

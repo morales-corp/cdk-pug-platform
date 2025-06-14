@@ -1,0 +1,89 @@
+[build-system]
+requires = ["setuptools", "wheel", "generate_changelog", "bump2version"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["cdk_pug_platform*"]
+
+[project]
+name = "cdk_pug_platform"
+keywords = ["aws", "cdk", "pug-platform", "iac"]
+dynamic = ["version"]
+requires-python = ">=3.11"
+description = "This CDK extension provides a platform for building CDK applications."
+authors = [{ name = "Cesar Morales", email = "cesar.morales@origen.bio" }]
+dependencies = [
+    "aws-cdk-lib>=2.2",
+    "constructs>=10.4",
+    "pydantic>=2.10",
+    "cryptography>=36.0",
+    "python-dotenv>=0.19"
+]
+license = { text = "MIT" }
+
+[project.urls]
+Homepage = "https://bitbucket.org/origen-life/origen-cdk-pug-platform"
+Documentation = "https://bitbucket.org/origen-life/origen-cdk-pug-platform/wiki/Home"
+Source = "https://bitbucket.org/origen-life/origen-cdk-pug-platform/src/"
+
+[project.scripts]
+generate-changelog = "generate_changelog.cli:cli"
+bump2version = "bump2version.cli:main"
+
+[dependency-groups]
+dev = [
+    "bumpversion",
+    "generate-changelog",
+    "git-fame>=1.12.2",
+]
+docs = [
+    "black>=23.3.0",
+    "griffe-pydantic",
+    "markdown-customblocks",
+    "mdx-truly-sane-lists",
+    "mkdocs>=1.4.3",
+    "mkdocs-click",
+    "mkdocs-gen-files>=0.5.0",
+    "mkdocs-git-authors-plugin",
+    "mkdocs-git-committers-plugin",
+    "mkdocs-git-revision-date-localized-plugin",
+    "mkdocs-include-markdown-plugin",
+    "mkdocs-literate-nav>=0.6.0",
+    "mkdocs-material>=9.1.0",
+    "mkdocs-section-index>=0.3.5",
+    "mkdocstrings[python]",
+    "python-frontmatter"
+]
+test = [
+    "coverage[toml]",
+    "faker",
+    "pre-commit",
+    "pytest",
+    "pytest-cov",
+    "pytest-mock",
+]
+
+[tool.setuptools.dynamic]
+version = { attr = "cdk_pug_platform.__version__" }
+
+[tool.bumpversion]
+allow_dirty = true
+current_version = "1.0.45"
+commit = true
+commit_args = "--no-verify"
+tag = true
+tag_name = "{new_version}"
+parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)"
+serialize = ["{major}.{minor}.{patch}"]
+message = "Version updated from {current_version} to {new_version}"
+
+[[tool.bumpversion.files]]
+filename = "pyproject.toml"
+search = 'current_version = "{current_version}"'
+replace = 'current_version = "{new_version}"'
+
+[[tool.bumpversion.files]]
+filename = "cdk_pug_platform/__init__.py"
+search = '__version__ = "{current_version}"'
+replace = '__version__ = "{new_version}"'

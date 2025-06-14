@@ -1,0 +1,305 @@
+{
+    "version": "2.0.0",
+    "inputs": [
+        {
+            "id": "iacServerDir",
+            "type": "promptString",
+            "description": "Infrastructure as Code Server Directory",
+            "default": "server"
+        },
+        {
+            "id": "stackId",
+            "type": "promptString",
+            "description": "Stack id from cdk ls",
+            "default": "tenant-origen-corp-live"
+        },
+        {
+            "id": "codeartifact-repository",
+            "type": "promptString",
+            "description": "CodeArtifact Repository",
+            "default": "origen-iac"
+        }
+    ],
+    "tasks": [
+        {
+            "label": "clean __pycache__",
+            "type": "shell",
+            "group": "build",
+            "osx": {
+                "command": "find . -type d -name \"__pycache__\" -exec rm -r {} +"
+            },
+            "windows": {
+                "command": "for /d /r . %d in (__pycache__) do @if exist \"%d\" rd /s/q \"%d\""
+            },
+            "linux": {
+                "command": "find . -type d -name \"__pycache__\" -exec rm -r {} +"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "install python 3.12",
+            "type": "shell",
+            "group": "none",
+            "osx": {
+                "command": "brew install python@3.12"
+            },
+            "linux": {
+                "command": "sudo apt-get install python3.12"
+            },
+            "windows": {
+                "command": "choco install python3 --version=3.12.0"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "alias python for python3.12",
+            "type": "shell",
+            "group": "none",
+            "osx": {
+                "command": "grep -qxF \"alias python='python3.12'\" ~/.zshrc || (echo \"\nalias python='python3.12'\" >> ~/.zshrc && source ~/.zshrc)"
+            },
+            "linux": {
+                "command": "grep -qxF \"alias python='python3.12'\" ~/.bashrc || (echo \"\nalias python='python3.12'\" >> ~/.bashrc && source ~/.bashrc)"
+            },
+            "windows": {
+                "command": "powershell -Command \"if (-not (Get-Content $PROFILE | Select-String -Pattern 'New-Alias -Name python -Value python3.12')) { 'New-Alias -Name python -Value python3.12' | Out-File -Append $PROFILE; . $PROFILE }\""
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "create virtual environment",
+            "type": "shell",
+            "group": "none",
+            "dependsOn": [
+                "install python 3.12",
+                "install graphviz",
+                "alias python for python3.12"
+            ],
+            "dependsOrder": "parallel",
+            "osx": {
+                "command": "rm -rf .venv && python3.12 -m venv .venv"
+            },
+            "linux": {
+                "command": "rm -rf .venv && python -m venv .venv"
+            },
+            "windows": {
+                "command": "Remove-Item -Recurse -Force .venv; python -m venv .venv"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "install pip tools",
+            "type": "shell",
+            "group": "none",
+            "dependsOn": "create virtual environment",
+            "dependsOrder": "sequence",
+            "osx": {
+                "command": "source .venv/bin/activate && pip install pip-tools"
+            },
+            "linux": {
+                "command": "source .venv/bin/activate && pip install pip-tools"
+            },
+            "windows": {
+                "command": ".venv\\Scripts\\Activate && pip install pip-tools"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "install dependencies",
+            "type": "shell",
+            "group": "none",
+            "dependsOn": "install pip tools",
+            "dependsOrder": "sequence",
+            "osx": {
+                "command": "source .venv/bin/activate && pip-compile requirements.in --output-file requirements.txt && pip install -r requirements.txt"
+            },
+            "linux": {
+                "command": "source .venv/bin/activate && pip-compile requirements.in --output-file requirements.txt && pip install -r requirements.txt"
+            },
+            "windows": {
+                "command": ".venv\\Scripts\\Activate && pip-compile requirements.in --output-file requirements.txt; pip install -r requirements.txt"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "run linter",
+            "type": "shell",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "osx": {
+                "command": "source .venv/bin/activate && flake8 ${input:iacServerDir}"
+            },
+            "linux": {
+                "command": "source .venv/bin/activate && flake8 ${input:iacServerDir}"
+            },
+            "windows": {
+                "command": ".venv\\Scripts\\Activate ; flake8 ${input:iacServerDir}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "format python code src/cdk_pug_platform",
+            "type": "shell",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "osx": {
+                "command": "source .venv/bin/activate && autopep8 --in-place --recursive --aggressive --max-line-length 120 src/cdk_pug_platform && black --line-length 120 src/cdk_pug_platform && black src/cdk_pug_platform && flake8 src/cdk_pug_platform"
+            },
+        },
+        {
+            "label": "format python code server",
+            "type": "shell",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "dependsOn": "format python code src/cdk_pug_platform",
+            "dependsOrder": "sequence",
+            "osx": {
+                "command": "source .venv/bin/activate && autopep8 --in-place --recursive --aggressive --max-line-length 120 ${input:iacServerDir} && black --line-length 120 ${input:iacServerDir} && black ${input:iacServerDir} && flake8 ${input:iacServerDir}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "aws list profiles (aws configure list-profiles)",
+            "type": "shell",
+            "group": "none",
+            "osx": {
+                "command": "aws configure list-profiles"
+            },
+            "linux": {
+                "command": "aws configure list-profiles"
+            },
+            "windows": {
+                "command": "aws configure list-profiles"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "aws sso login",
+            "type": "shell",
+            "group": "none",
+            "osx": {
+                "command": "aws sso login --profile AWSAdministratorAccess-111856684272"
+            },
+            "linux": {
+                "command": "aws sso login --profile AWSAdministratorAccess-111856684272"
+            },
+            "windows": {
+                "command": "aws sso login --profile AWSAdministratorAccess-111856684272"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "cdk ls",
+            "type": "shell",
+            "group": "none",
+            "osx": {
+                "command": "source .venv/bin/activate && PYTHONPATH=\"${PYTHONPATH:+$PYTHONPATH:}src:server/aws/cdk\" cdk ls"
+            },
+            "linux": {
+                "command": "source .venv/bin/activate && PYTHONPATH=\"${PYTHONPATH:+$PYTHONPATH:}src:server/aws/cdk\" cdk ls"
+            },
+            "windows": {
+                "command": ".venv\\Scripts\\Activate ; $env:PYTHONPATH = \"$env:PYTHONPATH;src;server\\aws\\cdk\" ; cdk ls"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "cdk synth",
+            "type": "shell",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "osx": {
+                "command": "source .venv/bin/activate && PYTHONPATH=\"${PYTHONPATH:+$PYTHONPATH:}src:server/aws/cdk\" cdk synth ${input:stackId} --quiet --profile AWSAdministratorAccess-111856684272"
+            },
+            "linux": {
+                "command": "source .venv/bin/activate && PYTHONPATH=\"${PYTHONPATH:+$PYTHONPATH:}src:server/aws/cdk\" cdk synth ${input:stackId} --quiet --profile AWSAdministratorAccess-111856684272"
+            },
+            "windows": {
+                "command": ".venv\\Scripts\\Activate ; $env:PYTHONPATH = \"$env:PYTHONPATH;src;server\\aws\\cdk\" ; cdk synth ${input:stackId} --quiet --profile AWSAdministratorAccess-111856684272"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "cdk bootstrap",
+            "type": "shell",
+            "group": "none",
+            "osx": {
+                "command": "source .venv/bin/activate && PYTHONPATH=\"${PYTHONPATH:+$PYTHONPATH:}src:server/aws/cdk\" cdk bootstrap --profile AWSAdministratorAccess-111856684272"
+            },
+            "linux": {
+                "command": "source .venv/bin/activate && PYTHONPATH=\"${PYTHONPATH:+$PYTHONPATH:}src:server/aws/cdk\" cdk bootstrap --profile AWSAdministratorAccess-111856684272"
+            },
+            "windows": {
+                "command": ".venv\\Scripts\\Activate ; $env:PYTHONPATH = \"$env:PYTHONPATH;src;server\\aws\\cdk\" ; cdk bootstrap --profile AWSAdministratorAccess-111856684272"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "cdk deploy",
+            "type": "shell",
+            "group": "none",
+            "osx": {
+                "command": "source .venv/bin/activate && PYTHONPATH=\"${PYTHONPATH:+$PYTHONPATH:}src:server/aws/cdk\" cdk deploy ${input:stackId} --require-approval never --profile AWSAdministratorAccess-111856684272"
+            },
+            "linux": {
+                "command": "source .venv/bin/activate && PYTHONPATH=\"${PYTHONPATH:+$PYTHONPATH:}src:server/aws/cdk\" cdk deploy ${input:stackId} --require-approval never --profile AWSAdministratorAccess-111856684272"
+            },
+            "windows": {
+                "command": ".venv\\Scripts\\Activate ; $env:PYTHONPATH = \"$env:PYTHONPATH;src;server\\aws\\cdk\" ; cdk deploy ${input:stackId} --require-approval never --profile AWSAdministratorAccess-111856684272"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "cdk destroy",
+            "type": "shell",
+            "group": "none",
+            "osx": {
+                "command": "source .venv/bin/activate && PYTHONPATH=\"${PYTHONPATH:+$PYTHONPATH:}src:server/aws/cdk\" cdk destroy ${input:stackId} --force --profile AWSAdministratorAccess-111856684272"
+            },
+            "linux": {
+                "command": "source .venv/bin/activate && PYTHONPATH=\"${PYTHONPATH:+$PYTHONPATH:}src:server/aws/cdk\" cdk destroy ${input:stackId} --force --profile AWSAdministratorAccess-111856684272"
+            },
+            "windows": {
+                "command": ".venv\\Scripts\\Activate ; $env:PYTHONPATH = \"$env:PYTHONPATH;src;server\\aws\\cdk\" ; cdk destroy ${input:stackId} --force --profile AWSAdministratorAccess-111856684272"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "codeartifact delete",
+            "type": "shell",
+            "group": "none",
+            "osx": {
+                "command": "aws codeartifact delete-package-versions --domain $CODE_ARTIFACT_DOMAIN --domain-owner 111856684272 --repository $CODE_ARTIFACT_REPOSITORY --format pypi --package $CODE_ARTIFACT_REPOSITORY --versions 1.0.0 --region eu-west-3 --profile AWSAdministratorAccess-111856684272"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "codeartifact upload",
+            "type": "shell",
+            "group": "none",
+            "dependsOn": "format python code src/cdk_pug_platform",
+            "dependsOrder": "sequence",
+            "osx": {
+                "command": "source .venv/bin/activate && aws codeartifact login --tool twine --domain $CODE_ARTIFACT_DOMAIN --domain-owner 111856684272 --repository $CODE_ARTIFACT_REPOSITORY --region eu-west-3 --profile AWSAdministratorAccess-111856684272 && cd src && rm -rf dist && generate-changelog && bump-my-version bump patch && python -m build && twine upload --repository codeartifact dist/*"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "codeartifact login",
+            "type": "shell",
+            "group": "none",
+            "osx": {
+                "command": "aws codeartifact login --tool twine --domain $CODE_ARTIFACT_DOMAIN --domain-owner 111856684272 --repository $CODE_ARTIFACT_REPOSITORY --region eu-west-3 --profile AWSAdministratorAccess-111856684272"
+            },
+            "problemMatcher": []
+        }
+    ]
+}
