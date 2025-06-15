@@ -8,7 +8,7 @@ from aws_cdk import Stack
 
 # endregion
 
-# region: origen cdk-pug-platform
+# region: morales cdk-pug-platform
 from cdk_pug_platform.models.environments.app_environment import AppEnvironment
 
 # endregion

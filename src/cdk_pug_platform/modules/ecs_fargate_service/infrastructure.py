@@ -17,14 +17,14 @@ from aws_cdk import (
 
 # endregion
 
-# region: origen cdk-pug-platform
+# region: morales cdk-pug-platform
 from cdk_pug_platform.models.environments.app_environment import AppEnvironment
 from cdk_pug_platform.models.modules.pug_module import PugModule
 from cdk_pug_platform.models.tenants.tenant_base import TenantBase
 
 # endregion
 
-# region: origen cdk-pug-platform -> ecs fargate service params
+# region: morales cdk-pug-platform -> ecs fargate service params
 
 
 class EcsFargateServiceParams:

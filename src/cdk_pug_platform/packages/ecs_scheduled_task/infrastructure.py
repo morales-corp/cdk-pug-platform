@@ -11,7 +11,7 @@ from aws_cdk.aws_secretsmanager import ISecret
 
 # endregion
 
-# region: origen cdk-pug-platform
+# region: morales cdk-pug-platform
 from cdk_pug_platform.models.tenants.tenant_base import TenantBase
 from cdk_pug_platform.build.service_secrets_builder import ServiceSecretsBuilder
 from cdk_pug_platform.build.service_task_definition_builder import (

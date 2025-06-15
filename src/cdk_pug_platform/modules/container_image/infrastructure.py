@@ -14,7 +14,7 @@ from aws_cdk import (
 
 # endregion
 
-# region origen cdk-pug-platform
+# region morales cdk-pug-platform
 from cdk_pug_platform.models.containers.registry_types import RegistryTypes
 from cdk_pug_platform.models.modules.pug_module import PugModule
 from cdk_pug_platform.utils.configs import DeploymentConfig

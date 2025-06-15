@@ -10,7 +10,7 @@ from aws_cdk import aws_logs as logs
 
 # endregion
 
-# region origen cdk-pug-platform
+# region morales cdk-pug-platform
 from cdk_pug_platform.models.modules.pug_module import PugModule
 from cdk_pug_platform.models.tenants.tenant_base import TenantBase
 

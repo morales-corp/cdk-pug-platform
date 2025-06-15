@@ -23,9 +23,9 @@ dependencies = [
 license = { text = "MIT" }
 
 [project.urls]
-Homepage = "https://bitbucket.org/origen-life/origen-cdk-pug-platform"
-Documentation = "https://bitbucket.org/origen-life/origen-cdk-pug-platform/wiki/Home"
-Source = "https://bitbucket.org/origen-life/origen-cdk-pug-platform/src/"
+Homepage = "https://bitbucket.org/morales-life/morales-cdk-pug-platform"
+Documentation = "https://bitbucket.org/morales-life/morales-cdk-pug-platform/wiki/Home"
+Source = "https://bitbucket.org/morales-life/morales-cdk-pug-platform/src/"
 
 [project.scripts]
 generate-changelog = "generate_changelog.cli:cli"

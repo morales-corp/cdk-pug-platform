@@ -11,7 +11,7 @@ from aws_cdk import (
 
 # endregion
 
-# region: origen cdk-pug-platform
+# region: morales cdk-pug-platform
 from cdk_pug_platform.models.tenants.tenant_base import TenantBase
 from cdk_pug_platform.models.database.database_matrix import _MatrixType
 from cdk_pug_platform.modules.docker_lambda.infrastructure import (

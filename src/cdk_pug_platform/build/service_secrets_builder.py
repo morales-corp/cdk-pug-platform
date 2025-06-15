@@ -9,7 +9,7 @@ from aws_cdk import (
 )
 # endregion
 
-# region: origen cdk-pug-platform
+# region: morales cdk-pug-platform
 from cdk_pug_platform.packages.secrets.parsers import parse_secrets_from_env
 from cdk_pug_platform.models.tenants.tenant_base import TenantBase
 # endregion

@@ -36,7 +36,7 @@ class FirewallRulesBuilder:
                         prefix_list.prefix_list_id),
                     connection=port,
                     description=(
-                        "Allow DATABASE access from Origen Corp CIDR"
+                        "Allow DATABASE access from morales Corp CIDR"
                     )
                 )
                 for service, service_instance in services.items():

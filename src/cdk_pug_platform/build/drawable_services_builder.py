@@ -7,7 +7,7 @@ from aws_cdk.aws_logs import LogGroup
 from aws_cdk.aws_rds import DatabaseInstance
 # endregion
 
-# region: origen cdk-pug-platform
+# region: morales cdk-pug-platform
 from cdk_pug_platform.models.monitoring.colors import Colors
 from cdk_pug_platform.packages.application_dashboard.infrastructure import (
     DrawableService,

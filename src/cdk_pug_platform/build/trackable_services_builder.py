@@ -7,7 +7,7 @@ from aws_cdk.aws_rds import DatabaseInstance
 from aws_cdk.aws_cloudwatch import ComparisonOperator
 # endregion
 
-# region: origen cdk-pug-platform
+# region: morales cdk-pug-platform
 from cdk_pug_platform.packages.application_monitoring.infrastructure import (
     TrackableService
 )

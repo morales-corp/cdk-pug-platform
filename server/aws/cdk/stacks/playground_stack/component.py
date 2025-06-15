@@ -8,11 +8,11 @@ from aws_cdk import Stack
 
 # endregion
 
-# region: origen cdk-pug-platform
+# region: morales cdk-pug-platform
 from cdk_pug_platform.build.tag_rules_builder import TagRulesBuilder
 # endregion
 
-from tenants.origen_corp.tenant_origen_corp import TenantOrigenCorp
+from tenants.morales_corp.tenant_morales_corp import TenantmoralesCorp
 
 
 class PlaygroundStack(
@@ -22,7 +22,7 @@ class PlaygroundStack(
     def __init__(
             self,
             scope: Construct,
-            tenant: TenantOrigenCorp,
+            tenant: TenantmoralesCorp,
             **kwargs
     ):
         stack_id = f"playground-{tenant.COMPANY}-{tenant.ENVIRONMENT.value}"

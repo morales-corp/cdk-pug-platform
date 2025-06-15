@@ -8,7 +8,7 @@ from aws_cdk import Stack
 
 # endregion
 
-# region: origen cdk-pug-platform
+# region: morales cdk-pug-platform
 from cdk_pug_platform.packages.instance_key_pair.infrastructure import (
     InstanceKeyPair,
     OperatingSystem,

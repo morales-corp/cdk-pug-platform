@@ -11,7 +11,7 @@ from aws_cdk.aws_ecr_assets import Platform
 from aws_cdk.aws_ecs import CpuArchitecture
 # endregion
 
-# region: origen cdk-pug-platform
+# region: morales cdk-pug-platform
 from cdk_pug_platform.models.tenants.tenant_base import TenantBase
 from cdk_pug_platform.modules.ecr_registry.infrastructure import EcrRegistryPug
 from cdk_pug_platform.modules.container_image.infrastructure import (

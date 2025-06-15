@@ -367,11 +367,11 @@
     
 - Add PowerBiBastion class for managing Power BI bastion host setup; update PlaygroundStack to integrate networking and PowerBiBastion components; modify CIDR constants and remove unnecessary dependencies in VSCode tasks.
     
-- Add IAC_LEAD_HOME_CIDR constant and fix typo in PlaygroundStack initialization; update TenantOrigenCorp to include new CIDR.
+- Add IAC_LEAD_HOME_CIDR constant and fix typo in PlaygroundStack initialization; update TenantmoralesCorp to include new CIDR.
     
 - Add PlaygroundStack class to manage playground environment setup in AWS CDK.
     
-- Add ORIGEN_CORP_CIDR constant and update TenantOrigenCorp to include CIDR in prefix list.
+- Add morales_CORP_CIDR constant and update TenantmoralesCorp to include CIDR in prefix list.
     
 - Add cryptography support for PowerBiBastion class to manage private key generation and storage in Secrets Manager.
     

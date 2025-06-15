@@ -11,13 +11,13 @@
             "id": "stackId",
             "type": "promptString",
             "description": "Stack id from cdk ls",
-            "default": "tenant-origen-corp-live"
+            "default": "tenant-morales-corp-live"
         },
         {
             "id": "codeartifact-repository",
             "type": "promptString",
             "description": "CodeArtifact Repository",
-            "default": "origen-iac"
+            "default": "morales-iac"
         }
     ],
     "tasks": [

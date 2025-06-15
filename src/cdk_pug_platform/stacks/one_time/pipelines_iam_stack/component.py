@@ -9,7 +9,7 @@ from aws_cdk import Stack
 
 # endregion
 
-# region: origen cdk-pug-platform
+# region: morales cdk-pug-platform
 from cdk_pug_platform.models.iam.oidc_providers import OidcProviders
 from cdk_pug_platform.packages.iam.bitbucket_oidc.infrastructure import (
     BitBucketOidc,

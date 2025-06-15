@@ -12,7 +12,7 @@ import aws_cdk.aws_glue as glue
 import aws_cdk.aws_athena as athena
 # endregion
 
-# region: origen cdk-pug-platform
+# region: morales cdk-pug-platform
 from cdk_pug_platform.models.tenants.tenant_base import TenantBase
 # endregion
 
