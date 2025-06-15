@@ -20,18 +20,5 @@
     "powerbi",
     "POWERBI",
     "talke"
-  ],
-  "terminal.integrated.env.osx": {
-    "IAC_SERVER_DIR": "server",
-    "CODE_ARTIFACT_DOMAIN": "origen-corp-live",
-    "CODE_ARTIFACT_REPOSITORY": "origen-iac"
-  },
-  "terminal.integrated.env.linux": {
-    "IAC_SERVER_DIR": "server",
-    "CODE_ARTIFACT_DOMAIN": "origen-corp-live",
-    "CODE_ARTIFACT_REPOSITORY": "origen-iac"
-  },
-  "terminal.integrated.env.windows": {
-    "WINDOWS_COMMAND": "'NOT SUPPORTED' use your instance-operations asigned to project"
-  }
+  ]
 }
