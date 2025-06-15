@@ -12,7 +12,7 @@ keywords = ["aws", "cdk", "pug-platform", "iac"]
 dynamic = ["version"]
 requires-python = ">=3.11"
 description = "This CDK extension provides a platform for building CDK applications."
-authors = [{ name = "Cesar Morales", email = "cesar.morales@origen.bio" }]
+authors = [{ name = "Cesar Morales", email = "me@cesarmoralesonya.es" }]
 dependencies = [
     "aws-cdk-lib>=2.2",
     "constructs>=10.4",

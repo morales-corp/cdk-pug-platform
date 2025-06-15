@@ -136,7 +136,7 @@ echo "Directories created."
 echo "Configuring git..."
 sudo apt-get install -y gh
 sudo git config --system user.name "Infrastructuras Cloud"
-sudo git config --system user.email "infraestructuras.cloud@origen.bio"
+sudo git config --system user.email "<>"
 sudo git config --system credential.helper store
 echo "Git configured."
 
