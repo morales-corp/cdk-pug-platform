@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-from tenants.morales_corp.tenant_morales_corp import TenantmoralesCorp
 from cdk_pug_platform.stacks.one_time_ec2_config_stack.component import OneTimeEc2ConfigStack
 from stacks.tenant_stack.component import TenantStack
 from stacks.playground_stack.component import PlaygroundStack
