@@ -1,36 +1,25 @@
 #!/usr/bin/env python3
 
-from cdk_pug_platform.stacks.one_time_ec2_config_stack.component import OneTimeEc2ConfigStack
-from stacks.tenant_stack.component import TenantStack
-from stacks.playground_stack.component import PlaygroundStack
+# Example CDK App for Morales Corp Tenant
+# -*- coding: utf-8 -*-
+
+"""
+Example CDK App for Morales Corp Tenant
+This script sets up the AWS CDK application for the Morales Corp tenant.
+"""
+
 from aws_cdk import App, Environment
+from server.aws.cdk.tenants.morales_corp import TenantMoralesCorp
+from server.aws.cdk.stacks.playground_stack import PlaygroundStack
 
 
 app = App()
 
 # region tenants
-tenant_morales_corp = TenantmoralesCorp()
-# endregion
-
-# region one-time-ec2-config-stacks
-one_time_ec2_config_morales_corp_stack = OneTimeEc2ConfigStack(
-    app,
-    tenant_morales_corp,
-    env=Environment(
-        account=tenant_morales_corp.AWS_ACCOUNT, region=tenant_morales_corp.AWS_REGION
-    ),
-)
+tenant_morales_corp = TenantMoralesCorp()
 # endregion
 
 # region tenant-stacks
-tenant_morales_corp_dev_stack = TenantStack(
-    app,
-    tenant_morales_corp.live(),
-    env=Environment(
-        account=tenant_morales_corp.AWS_ACCOUNT, region=tenant_morales_corp.AWS_REGION
-    ),
-)
-
 tenant_morales_corp_playground_stack = PlaygroundStack(
     app,
     tenant_morales_corp.live(),

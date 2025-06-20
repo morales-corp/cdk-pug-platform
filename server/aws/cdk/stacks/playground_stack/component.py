@@ -12,7 +12,7 @@ from aws_cdk import Stack
 from cdk_pug_platform.build.tag_rules_builder import TagRulesBuilder
 # endregion
 
-from tenants.morales_corp.tenant_morales_corp import TenantmoralesCorp
+from cdk_pug_platform.models.tenants.tenant_base import TenantBase
 
 
 class PlaygroundStack(
@@ -22,7 +22,7 @@ class PlaygroundStack(
     def __init__(
             self,
             scope: Construct,
-            tenant: TenantmoralesCorp,
+            tenant: TenantBase,
             **kwargs
     ):
         stack_id = f"playground-{tenant.COMPANY}-{tenant.ENVIRONMENT.value}"
